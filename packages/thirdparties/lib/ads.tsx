@@ -38,36 +38,9 @@ export function SetupAds({
 }
 
 export const AdBanner = memo(function AdBanner({
-  name,
+  name: _name,
 }: {
   readonly name: "BANNER_160X600_1" | "BANNER_970X90_1";
 }): ReactNode {
-  const { id, width, height } = inventory[name];
-  if (process.env.NODE_ENV === "development") {
-    return (
-      <div
-        style={{
-          width: `${width}px`,
-          height: `${height}px`,
-          background: "#999",
-        }}
-      />
-    );
-  }
-  const html = `freestar.queue.push(function(){googletag.display("${id}");});`;
-  return (
-    <div
-      key={name}
-      style={{
-        maxWidth: `${width}px`,
-        maxHeight: `${height}px`,
-        overflow: "hidden",
-      }}
-    >
-      <div className={styles.placeholder} hidden={true} />
-      <div id={id}>
-        <script dangerouslySetInnerHTML={{ __html: html }} />
-      </div>
-    </div>
-  );
+  return null;
 });
