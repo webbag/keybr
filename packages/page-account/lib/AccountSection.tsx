@@ -24,7 +24,7 @@ export function AccountSection({
 
   return (
     <Article>
-      <AccountName user={user} />
+      <AccountName />
 
       <FormattedMessage
         id="account.accountPage.description"

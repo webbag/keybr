@@ -17,8 +17,11 @@ import { randomString, type SessionState } from "@fastr/middleware-session";
 import { User, UserLoginRequest } from "@keybr/database";
 import { Logger } from "@keybr/logger";
 import { type AbstractAdapter } from "@keybr/oauth";
+import { Pages } from "@keybr/pages-shared";
+import { type IntlShape } from "react-intl";
 import { z } from "zod";
 import { Mailer } from "../mail/index.ts";
+import { localePattern, pIntl } from "../page/intl.ts";
 import { messageWithLink } from "./email.ts";
 import { pAdapter } from "./pipe.ts";
 import { type AuthState } from "./types.ts";
@@ -107,12 +110,33 @@ export class Controller {
     ctx: Context<RouterState & SessionState & AuthState>,
     @pathParam("token", zod(z.string().min(1))) token: string,
   ) {
+    return this.login(ctx, token, "/account");
+  }
+
+  @http.GET(`/{locale:${localePattern}}/login/{token}`)
+  async loginWithTokenI18n(
+    ctx: Context<RouterState & SessionState & AuthState>,
+    @pathParam("locale", pIntl) intl: IntlShape,
+    @pathParam("token", zod(z.string().min(1))) token: string,
+  ) {
+    return this.login(
+      ctx,
+      token,
+      Pages.intlPath(Pages.account.path, intl.locale),
+    );
+  }
+
+  async login(
+    ctx: Context<RouterState & SessionState & AuthState>,
+    token: string,
+    redirectPath: string,
+  ) {
     ctx.state.session.destroy();
     const user = await UserLoginRequest.login(token);
     if (user != null) {
       ctx.state.session.start();
       ctx.state.session.set("userId", user.id!);
-      ctx.response.redirect("/account");
+      ctx.response.redirect(redirectPath);
     } else {
       throw new ForbiddenError("Invalid login link", {
         description:

@@ -11,7 +11,6 @@ import { type ReactNode } from "react";
 import { useIntl } from "react-intl";
 import { NavLink } from "react-router";
 import * as styles from "./NavMenu.module.less";
-import { SubMenu } from "./SubMenu.tsx";
 import { ThemeSwitcher } from "./themes/ThemeSwitcher.tsx";
 
 export function NavMenu({ currentPath }: { readonly currentPath: string }) {
@@ -52,10 +51,6 @@ export function NavMenu({ currentPath }: { readonly currentPath: string }) {
 
       <MenuItem>
         <MenuItemLink page={Pages.layouts} />
-      </MenuItem>
-
-      <MenuItem>
-        <SubMenu currentPath={currentPath} />
       </MenuItem>
     </div>
   );

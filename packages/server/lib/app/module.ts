@@ -15,6 +15,7 @@ import { AuthModule, loadUser } from "./auth/index.ts";
 import { cacheControl } from "./cachecontrol.ts";
 import { ErrorHandler } from "./error/index.ts";
 import { MailModule } from "./mail/index.ts";
+import { forcePolish } from "./page/index.ts";
 import { gameRoutes, mainRoutes } from "./routes.ts";
 import { SessionModule } from "./session.ts";
 
@@ -41,6 +42,7 @@ export class ApplicationModule implements Module {
       .use(staticFiles(publicDir, { cacheControl }))
       .use(SessionHandler)
       .use(loadUser())
+      .use(forcePolish())
       .use(mainRoutes());
   }
 

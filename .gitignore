@@ -26,6 +26,7 @@ sandbox/
 *.log
 *.bak
 *~
+PODSUMOWANIE.md
 
 # Custom scripts
 deploy.sh

@@ -6,7 +6,7 @@ import { createSchema, UserLoginRequest } from "@keybr/database";
 import { Logger } from "@keybr/logger";
 import Knex from "knex";
 
-const email = "user@localhost";
+const email = "xyz@localhost";
 const accessToken = "xyz";
 
 Env.probeFilesSync();
@@ -19,7 +19,11 @@ async function exec() {
     await createSchema(knex);
     Logger.info(`Database schema was created.`);
     await UserLoginRequest.query().delete().where({ email });
-    await UserLoginRequest.query().insert({ email, accessToken });
+    await UserLoginRequest.query().insert({
+      email,
+      accessToken,
+      createdAt: new Date("2099-01-01T00:00:00.000Z"),
+    });
     const loginLink = new URL(
       `/login/${accessToken}`,
       container.get("canonicalUrl"),

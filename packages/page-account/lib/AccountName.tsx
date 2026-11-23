@@ -1,24 +1,10 @@
-import { type UserDetails } from "@keybr/pages-shared";
 import { Header } from "@keybr/widget";
-import { FormattedMessage, useIntl } from "react-intl";
+import { FormattedMessage } from "react-intl";
 
-export function AccountName({ user }: { user: UserDetails | null }) {
-  const { formatMessage } = useIntl();
-
+export function AccountName() {
   return (
     <Header level={1}>
-      <FormattedMessage
-        id="t_Account_name"
-        defaultMessage="Account | {name}"
-        values={{
-          name:
-            user?.name ??
-            formatMessage({
-              id: "t_Anonymous_User",
-              defaultMessage: "Anonymous User",
-            }),
-        }}
-      />
+      <FormattedMessage id="t_Account" defaultMessage="Account" />
     </Header>
   );
 }

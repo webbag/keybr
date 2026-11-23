@@ -9,7 +9,7 @@ import { OAuthLoginForm } from "./OAuthLoginForm.tsx";
 export function SignInSection({ actions }: { actions: SignInActions }) {
   return (
     <Article>
-      <AccountName user={null} />
+      <AccountName />
 
       <FormattedMessage
         id="account.signInPage.description"

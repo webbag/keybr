@@ -120,6 +120,28 @@ test("login with an access token / new user", async () => {
   deepEqual(context.mailer.dump(), []);
 });
 
+test("login with an access token / localized link", async () => {
+  // Arrange.
+
+  await UserLoginRequest.query().insertGraph({
+    email: "test@keybr.com",
+    accessToken: "xyz",
+    createdAt: new Date(),
+  } as UserLoginRequest);
+
+  const request = startApp(context.get(Application, kMain));
+
+  // Act.
+
+  const response = await request.GET("/pl/login/xyz").send();
+
+  // Assert.
+
+  equal(response.status, 302);
+  equal(response.headers.get("Location"), "/pl/account");
+  equal(await request.who(), "test@keybr.com");
+});
+
 test("login with an access token / existing user", async () => {
   // Arrange.
 

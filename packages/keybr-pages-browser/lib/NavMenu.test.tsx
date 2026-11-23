@@ -3,7 +3,7 @@ import { FakeIntlProvider, PreferredLocaleContext } from "@keybr/intl";
 import { PageDataContext } from "@keybr/pages-shared";
 import { render } from "@testing-library/react";
 import { MemoryRouter } from "react-router";
-import { isNotNull } from "rich-assert";
+import { isNotNull, isNull } from "rich-assert";
 import { NavMenu } from "./NavMenu.tsx";
 
 test("render", () => {
@@ -33,8 +33,13 @@ test("render", () => {
   );
 
   isNotNull(r.queryByText("userName"));
-  isNotNull(r.queryByText("Polski"));
-  isNotNull(r.queryByText("English"));
+  isNull(r.queryByText("Polski"));
+  isNull(r.queryByText("English"));
+  isNull(r.queryByText("info@keybr.com"));
+  isNull(r.queryByText("Discord"));
+  isNull(r.queryByText("Github"));
+  isNull(r.queryByText("Przetłumacz"));
+  isNull(r.queryByText("Usuń reklamy"));
 
   r.unmount();
 });
